@@ -1,0 +1,218 @@
+.Form{
+  background-color: rgba(241, 241, 241, 0.252);
+
+  backdrop-filter: blur(10px)
+  
+}
+
+.pricing-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15) !important;
+}
+
+.amenities-section {
+  padding: 80px 5%;
+  background-color: #f9f9f9;
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay-bg {
+  content: "";
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  width: 200%;
+  height: 100%;
+  background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
+  opacity: 0.05;
+  z-index: 1;
+}
+
+.amenity-card {
+  text-align: center;
+  border-radius: 20px;
+  padding: 30px 20px;
+  transition: all 0.4s ease;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  z-index: 2;
+}
+
+.amenity-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.icon-wrapper {
+  font-size: 40px;
+  color: #1890ff;
+  margin-bottom: 16px;
+  transition: transform 0.3s;
+}
+
+.amenity-card:hover .icon-wrapper {
+  transform: scale(1.1);
+}
+
+.amenity-label {
+  font-size: 17px;
+  font-weight: 500;
+  color: #333;
+}
+
+.location-advantages-section {
+  padding: 80px 5%;
+  background-color: #f9f9f9;
+  position: relative;
+  overflow: hidden;
+}
+
+.location-overlay-bg {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50px;
+  width: 200%;
+  height: 100%;
+  background-image: url("https://www.transparenttextures.com/patterns/dark-mosaic.png");
+  opacity: 0.03;
+  z-index: 1;
+}
+
+.location-card {
+  text-align: center;
+  border-radius: 16px;
+  padding: 30px 20px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s, box-shadow 0.3s;
+  z-index: 2;
+}
+
+.location-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+}
+
+.location-icon {
+  font-size: 36px;
+  color: #1890ff;
+  margin-bottom: 12px;
+}
+
+.footer-section {
+  background-color: #222;
+  color: #fff;
+  padding: 40px 5%;
+}
+
+.footer-section .ant-form-item-label {
+  color: #fff !important;
+  font-size: 14px;
+}
+
+.footer-section .ant-btn-primary {
+  background-color: #1890ff;
+  border-color: #1890ff;
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.footer-section .ant-btn-primary:hover {
+  background-color: #40a9ff;
+  border-color: #40a9ff;
+}
+
+.footer-section .ant-input,
+.footer-section .ant-input-textarea {
+  background-color: #333;
+  border: 1px solid #444;
+  color: #fff;
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.footer-bottom {
+  border-top: 1px solid #444;
+  padding-top: 20px;
+  font-size: 14px;
+  color: #bbb;
+}
+
+.footer-bottom a {
+  color: #bbb;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-bottom a:hover {
+  color: #fff;
+}
+
+@media screen and (max-width: 768px) {
+  .footer-section .ant-form-item-label {
+    font-size: 12px;
+  }
+
+  .footer-section .ant-btn-primary {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .footer-bottom {
+    font-size: 12px;
+  }
+
+  .footer-section .ant-input,
+  .footer-section .ant-input-textarea {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .footer-section .ant-btn-primary {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .footer-section .ant-input,
+  .footer-section .ant-input-textarea {
+    font-size: 14px;
+    padding: 6px;
+  }
+
+  .footer-section .ant-form-item-label {
+    font-size: 12px;
+  }
+}
+
+.button{
+    
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  background: #000000;
+  color: #FFFFFF;
+  border-radius: 8px;
+  /* padding: 14px 24px 16px; */
+  /* font-size: 18px; */
+  /* font-weight: 700; */
+  line-height: 1;
+  transition: transform 200ms,background 200ms;
+  :hover{
+      transform: translateY(-2px);
+  }
+  
+}
