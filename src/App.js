@@ -10,6 +10,7 @@ function App() {
   const openPopup = () => setIsModalOpen(true);
   const closePopup = () => setIsModalOpen(false);
 
+  
   return (
     <Router>
       {/* Reusable popup available across routes */}

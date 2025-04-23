@@ -1,204 +1,86 @@
-import React from "react";
-import { Row, Col, Typography, Carousel } from "antd";
-import {
-  EnvironmentOutlined,
-  ShopOutlined,
-  CarOutlined,
-  BankOutlined,
-  HeartOutlined,
-  FieldTimeOutlined,
-} from "@ant-design/icons";
+import React, { useEffect } from "react";
+import { Typography, List } from "antd";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const { Title, Paragraph } = Typography;
 
-const locationAdvantages = [
-  {
-    icon: <EnvironmentOutlined />,
-    title: "Prime Location",
-    description: "Located in the heart of the city, ensuring easy access to major commercial and residential hubs.",
-  },
-  {
-    icon: <ShopOutlined />,
-    title: "Proximity to Shopping Centers",
-    description: "Close to major shopping malls and entertainment centers, offering convenience and leisure.",
-  },
-  {
-    icon: <CarOutlined />,
-    title: "Excellent Connectivity",
-    description: "Well-connected to public transport and highways, reducing travel time for work or leisure.",
-  },
-  {
-    icon: <BankOutlined />,
-    title: "Nearby Financial Institutions",
-    description: "Surrounded by banks, ATMs, and financial services, making daily transactions easier.",
-  },
-  {
-    icon: <HeartOutlined />,
-    title: "Health and Wellness",
-    description: "With hospitals, gyms, and wellness centers nearby, prioritizing health is simple and convenient.",
-  },
-  {
-    icon: <FieldTimeOutlined />,
-    title: "Timely Public Services",
-    description: "Quick access to essential services like post offices, police stations, and emergency response units.",
-  },
-];
+const LocationAdvantage = () => {
+  useEffect(() => {
+    AOS.init({ duration: 1000, once: true });
+  }, []);
 
-const LocationAdvantages = () => {
+  const advantages = [
+    "Prime city-center location",
+    "5 mins walk from Metro Station",
+    "Close to top-rated restaurants and cafés",
+    "High footfall area for business exposure",
+    "Proximity to banks, ATMs, and supermarkets",
+    "Safe neighborhood with 24/7 connectivity",
+  ];
+
   return (
     <div
       style={{
-        padding: "80px 5%",
-        background: "#f8f8f8",
-        position: "relative",
+        display: "flex",
+        flexWrap: "wrap",
+        padding: "60px 5%",
+        background: "#fff",
+        gap: "40px",
+        justifyContent: "space-between",
       }}
     >
-      <Title
-        level={2}
+      {/* Left Side: Advantages List */}
+      <div
         style={{
-          textAlign: "center",
-          marginBottom: "60px",
-          color: "#001529",
-          fontWeight: 600,
+          flex: "1",
+          minWidth: "320px",
+          maxWidth: "100%",
         }}
+        data-aos="fade-right"
       >
-        Location Advantages
-      </Title>
+        <Title level={1} 
+        style={{fontWeight: 700, fontSize:80, textAlign:"left", marginTop:-10}}
+        >Location</Title>
+        <Paragraph style={{ fontSize: "16px", color: "#595959" }}>
+          Located in the heart of the city, our space offers unparalleled access and convenience.
+        </Paragraph>
 
-      <Carousel
-        draggable
-        dots={true}
-        effect="scrollx"
+        <List
+          dataSource={advantages}
+          renderItem={(item) => (
+            <List.Item>
+              <span style={{ fontSize: "16px" }}>✔️ {item}</span>
+            </List.Item>
+          )}
+        />
+      </div>
+
+      {/* Right Side: Google Map */}
+      <div
         style={{
-          marginBottom: "40px",
-          scrollSnapType: "x mandatory", // Add scroll-snap to the carousel for smooth scrolling
+          flex: "1",
+          minWidth: "320px",
+          height: "60vh",
+          borderRadius: "12px",
+          overflow: "hidden",
+          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.15)",
         }}
+        data-aos="fade-left"
       >
-        {/* Slider Items */}
-        <div>
-          <Row gutter={[24, 24]} justify="center" style={{ overflowX: "auto", scrollSnapType: "x mandatory" }}>
-            {locationAdvantages.slice(0, 3).map((item, index) => (
-              <Col xs={12} sm={12} md={8} key={index}>
-                <div
-                  style={{
-                    borderRadius: "16px",
-                    background: "rgba(255, 255, 255, 0.9)",
-                    boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
-                    backdropFilter: "blur(10px)",
-                    WebkitBackdropFilter: "blur(10px)",
-                    padding: "30px",
-                    cursor: "pointer",
-                    margin: "0 auto",
-                    textAlign: "center",
-                    transform: "translateY(0)",
-                    transition: "transform 0.3s ease-in-out",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-8px)";
-                    e.currentTarget.style.boxShadow = "0 15px 30px rgba(0,0,0,0.15)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0)";
-                    e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.1)";
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 60,
-                      height: 60,
-                      borderRadius: "50%",
-                      background: "#001529",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginBottom: 20,
-                    }}
-                  >
-                    <div style={{ color: "#fff", fontSize: 24 }}>{item.icon}</div>
-                  </div>
-                  <Title level={4} style={{ fontWeight: 500, color: "#002140" }}>
-                    {item.title}
-                  </Title>
-                  <Paragraph style={{ color: "#595959", fontSize: "15px", lineHeight: 1.7 }}>
-                    {item.description}
-                  </Paragraph>
-                </div>
-              </Col>
-            ))}
-          </Row>
-        </div>
-
-        <div>
-          <Row gutter={[24, 24]} justify="center" style={{ overflowX: "auto", scrollSnapType: "x mandatory" }}>
-            {locationAdvantages.slice(3, 6).map((item, index) => (
-              <Col xs={12} sm={12} md={8} key={index}>
-                <div
-                  style={{
-                    borderRadius: "16px",
-                    background: "rgba(255, 255, 255, 0.9)",
-                    boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
-                    backdropFilter: "blur(10px)",
-                    WebkitBackdropFilter: "blur(10px)",
-                    padding: "30px",
-                    cursor: "pointer",
-                    margin: "0 auto",
-                    textAlign: "center",
-                    transform: "translateY(0)",
-                    transition: "transform 0.3s ease-in-out",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-8px)";
-                    e.currentTarget.style.boxShadow = "0 15px 30px rgba(0,0,0,0.15)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0)";
-                    e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.1)";
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 60,
-                      height: 60,
-                      borderRadius: "50%",
-                      background: "#001529",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginBottom: 20,
-                    }}
-                  >
-                    <div style={{ color: "#fff", fontSize: 24 }}>{item.icon}</div>
-                  </div>
-                  <Title level={4} style={{ fontWeight: 500, color: "#002140" }}>
-                    {item.title}
-                  </Title>
-                  <Paragraph style={{ color: "#595959", fontSize: "15px", lineHeight: 1.7 }}>
-                    {item.description}
-                  </Paragraph>
-                </div>
-              </Col>
-            ))}
-          </Row>
-        </div>
-      </Carousel>
-
-      <style>
-        {`
-          @media (max-width: 576px) {
-            h2.ant-typography {
-              font-size: 24px !important;
-            }
-            .ant-typography h4 {
-              font-size: 18px !important;
-            }
-            div[style*="padding: 30px"] {
-              padding: 24px !important;
-            }
-          }
-        `}
-      </style>
+        <iframe
+          title="location-map"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241317.11609858294!2d72.74109934803173!3d19.08219783966745!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b63d361f5d05%3A0x740b67a91a8df0d7!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1682268228433!5m2!1sen!2sin"
+          width="100%"
+          height="100%"
+          style={{ border: 0 }}
+          allowFullScreen=""
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
     </div>
   );
 };
 
-export default LocationAdvantages;
+export default LocationAdvantage;

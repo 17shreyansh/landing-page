@@ -1,134 +1,136 @@
-import React from "react";
-import { Row, Col, Typography } from "antd";
-import {
-  EnvironmentOutlined,
-  ThunderboltOutlined,
-  ClusterOutlined,
-  HomeOutlined,
-  WifiOutlined,
-  CalendarOutlined,
-} from "@ant-design/icons";
+import React, { useEffect, useState, useRef } from "react";
+import { Typography } from "antd";
+import Image1 from "../assets/1.jpg";
+import Image2 from "../assets/2.jpg";
 
 const { Title, Paragraph } = Typography;
 
-const highlights = [
-  {
-    icon: <EnvironmentOutlined />,
-    title: "Prime Location",
-    description: "Situated at the city’s core, offering excellent connectivity to all major areas.",
+const styles = {
+  section: {
+    height: "100vh",
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+    overflow: "hidden",
   },
-  {
-    icon: <ThunderboltOutlined />,
-    title: "24/7 Power Backup",
-    description: "Complete power backup for uninterrupted lifestyle and business needs.",
+  verticalHeading: {
+    position: "fixed",
+    top: "50%",
+    right: -250,
+    transform: "translateY(-50%) rotate(-90deg)",
+    fontSize: "100px",
+    fontWeight: "bold",
+    color: "black",
+    zIndex: -2,
+    pointerEvents: "none",
+    textTransform: "uppercase",
+    whiteSpace: "nowrap",
+    transition: "opacity 0.3s ease",
   },
-  {
-    icon: <ClusterOutlined />,
-    title: "Modern Architecture",
-    description: "Contemporary, sleek design with luxurious aesthetics and functionality.",
+  imageContainer: (url, alignRight = false) => ({
+    flex: 1,
+    backgroundImage: `url(${url})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    filter: "brightness(0.75)",
+    clipPath: alignRight
+      ? "polygon(0 0, 100% 0, 100% 100%, 20% 100%)"
+      : "polygon(0 0, 80% 0, 100% 100%, 0 100%)",
+    transition: "0.5s",
+  }),
+  textContainer: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    padding: "5vw",
   },
-  {
-    icon: <HomeOutlined />,
-    title: "Smart Homes",
-    description: "Automated interiors equipped with intelligent controls and monitoring.",
-  },
-  {
-    icon: <WifiOutlined />,
-    title: "High-Speed Internet",
-    description: "Seamless internet access for all your work-from-home or streaming needs.",
-  },
-  {
-    icon: <CalendarOutlined />,
-    title: "Business Lounge",
-    description: "Sophisticated spaces for meetings, networking, and relaxation.",
-  },
-];
+};
 
-const ProjectHighlights = () => {
+const OverviewHighlights = () => {
+  const [showHighlightHeading, setShowHighlightHeading] = useState(true);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const highlightRef = useRef(null);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth < 768);
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => {
+      window.removeEventListener("resize", checkScreenSize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowHighlightHeading(!entry.isIntersecting);
+      },
+      { threshold: 1 }
+    );
+
+    if (highlightRef.current) {
+      observer.observe(highlightRef.current);
+    }
+
+    return () => {
+      
+    };
+  }, []);
+
   return (
-    <div
-      style={{
-        padding: "80px 5%",
-        background: "#f4f6f8",
-      }}
-    >
-      <Title
-        level={2}
-        style={{
-          textAlign: "center",
-          marginBottom: "60px",
-          color: "#001529",
-          fontWeight: 600,
-        }}
-      >
-        Project Highlights
-      </Title>
+    <>
+      {/* OVERVIEW Section */}
+      <section style={styles.section}>
+        <div style={{ display: "flex", width: "100%", height: "100%" }}>
+          <div style={styles.imageContainer(Image1)}></div>
+          <div style={styles.textContainer}>
+            <Title level={1} style={{ color: "#111", fontSize: "3rem" }}>
+              Modern Living Like Never Before
+            </Title>
+            <Paragraph style={{ fontSize: "1.2rem", color: "#333" }}>
+              Explore thoughtfully crafted living spaces that blend aesthetics with
+              comfort. Whether you're working or relaxing, everything around you
+              inspires clarity and calm.
+            </Paragraph>
+          </div>
+        </div>
+      </section>
 
-      <Row gutter={[24, 24]} justify="center">
-        {highlights.map((item, index) => (
-          <Col xs={12} sm={12} md={8} key={index}>
-            <div
-              style={{
-                borderRadius: "16px",
-                background: "rgba(255, 255, 255, 0.85)",
-                boxShadow: "0 8px 24px rgba(0,0,0,0.05)",
-                backdropFilter: "blur(10px)",
-                WebkitBackdropFilter: "blur(10px)",
-                padding: "30px",
-                transition: "all 0.4s ease",
-                cursor: "default",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-8px)";
-                e.currentTarget.style.boxShadow = "0 15px 30px rgba(0,0,0,0.12)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.05)";
-              }}
-            >
-              <div
-                style={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: "50%",
-                  background: "#001529",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginBottom: 20,
-                }}
-              >
-                <div style={{ color: "#fff", fontSize: 24 }}>{item.icon}</div>
-              </div>
-              <Title level={4} style={{ fontWeight: 500, color: "#002140" }}>
-                {item.title}
-              </Title>
-              <Paragraph style={{ color: "#595959", fontSize: "15px", lineHeight: 1.7 }}>
-                {item.description}
-              </Paragraph>
-            </div>
-          </Col>
-        ))}
-      </Row>
+      {/* HIGHLIGHTS Section */}
+      <section style={styles.section} ref={highlightRef}>
+        {/* Conditionally show heading */}
+        {!isSmallScreen && (
+          <div
+            style={{
+              ...styles.verticalHeading,
+              opacity: showHighlightHeading ? 1 : 0,
+            }}
+          >
+            HIGHLIGHTS
+          </div>
+        )}
 
-      <style>
-        {`
-          @media (max-width: 576px) {
-            h2.ant-typography {
-              font-size: 24px !important;
-            }
-            .ant-typography h4 {
-              font-size: 18px !important;
-            }
-            div[style*="padding: 30px"] {
-              padding: 24px !important;
-            }
-          }
-        `}
-      </style>
-    </div>
+        <div style={{ display: "flex", width: "100%", height: "100%" }}>
+          <div style={styles.textContainer}>
+            <Title level={1} style={{ color: "#111", fontSize: "3rem" }}>
+              Unmatched Lifestyle Perks
+            </Title>
+            <Paragraph style={{ fontSize: "1.2rem", color: "#333" }}>
+              Rooftop gardens, tech-integrated security, and immersive experiences
+              for every age – enjoy the perks that make every day exceptional.
+            </Paragraph>
+          </div>
+          <div style={styles.imageContainer(Image2, true)}></div>
+        </div>
+      </section>
+    </>
   );
 };
 
-export default ProjectHighlights;
+export default OverviewHighlights;
+  

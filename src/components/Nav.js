@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Menu, Button, Row, Col, Drawer } from "antd";
-import { MenuOutlined } from "@ant-design/icons";
+import { MenuOutlined, PhoneOutlined } from "@ant-design/icons";
 
-const Nav = ({ openPopup }) => {
+const Nav = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [visible, setVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -11,22 +11,25 @@ const Nav = ({ openPopup }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 300);
+      setIsScrolled(window.scrollY > 100);
+      const scrollY = window.scrollY;
 
-      if (window.scrollY > lastScrollY) {
+      if (scrollY - lastScrollY > 10) {
         setIsNavbarVisible(false);
-      } else {
+      } else if (lastScrollY - scrollY > 10) {
         setIsNavbarVisible(true);
       }
-      setLastScrollY(window.scrollY);
+
+      setLastScrollY(scrollY);
     };
 
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.matchMedia("(max-width: 768px)").matches);
     };
 
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", handleResize);
+    handleResize();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -43,27 +46,15 @@ const Nav = ({ openPopup }) => {
 
   const menuItems = (
     <>
-      <Menu.Item key="1" onClick={() => scrollToSection("highlights")}>
-      Highlights
-    </Menu.Item>
-    <Menu.Item key="2" onClick={() => scrollToSection("floor-plan")}>
-      Floor Plan
-    </Menu.Item>
-    <Menu.Item key="3" onClick={() => scrollToSection("pricing")}>
-      Pricing
-    </Menu.Item>
-    <Menu.Item key="4" onClick={() => scrollToSection("amenities")}>
-      Amenities
-    </Menu.Item>
-    <Menu.Item key="5" onClick={() => scrollToSection("gallery")}>
-      Gallery
-    </Menu.Item>
-    <Menu.Item key="6" onClick={() => scrollToSection("location")}>
-      Location
-    </Menu.Item>
-    <Menu.Item key="7" onClick={() => scrollToSection("contact")}>
-      Contact
-    </Menu.Item>
+      {["highlights", "floor-plan", "pricing", "amenities", "gallery", "location", "contact"].map((id, idx) => (
+        <Menu.Item
+          key={idx}
+          onClick={() => scrollToSection(id)}
+          style={{ fontSize: "16px" , textAlign: "center" }}
+        >
+          {id.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase())}
+        </Menu.Item>
+      ))}
     </>
   );
 
@@ -75,20 +66,20 @@ const Nav = ({ openPopup }) => {
       align="middle"
       style={{
         background: isScrolled ? "#fff" : "transparent",
-        padding: "10px 24px", 
+        padding: isMobile ? "10px 16px" : "16px 70px",
         position: "fixed",
         width: "100%",
         zIndex: 999,
-        transition: "all 0.4s ease",
-        top: isNavbarVisible ? "0" : "-80px",
-        color: menuTextColor,
+        transition: "top 0.5s ease, background 0.3s ease",
+        top: isNavbarVisible ? "0" : "-100px",
+        boxShadow: isScrolled ? "0 2px 8px rgba(0,0,0,0.1)" : "none",
       }}
     >
       <Col>
         <div
           style={{
             fontWeight: "bold",
-            fontSize: "20px",
+            fontSize: isMobile ? "20px" : "22px",
             color: menuTextColor,
             transition: "color 0.3s ease",
           }}
@@ -101,12 +92,12 @@ const Nav = ({ openPopup }) => {
         <Col flex="auto">
           <Menu
             mode="horizontal"
-            defaultSelectedKeys={[]}
             style={{
               borderBottom: "none",
               background: "transparent",
+              justifyContent: "center",
+              display: "flex",
               color: menuTextColor,
-              transition: "color 0.3s ease",
             }}
             theme={isScrolled ? "light" : "dark"}
           >
@@ -116,19 +107,50 @@ const Nav = ({ openPopup }) => {
       )}
 
       <Col>
-        {!isMobile && (
-          <Button
-            // type="primary"
-            className="button"
-            onClick={openPopup}
-            style={{ transition: "all 0.3s ease", }}
+        {!isMobile ? (
+          <a
+            href="tel:+917017828192"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              padding: "8px 16px",
+              backgroundColor: "black",
+              color: "white",
+              borderRadius: "8px",
+              animation: "pulse 2s infinite",
+              textDecoration: "none",
+              fontWeight: "bold",
+              transition: "all 0.3s ease",
+              width: "160px",
+              justifyContent: "center",
+            }}
           >
-            Enquire
-          </Button>
-        )}
-
-        {isMobile && (
+            <PhoneOutlined style={{ marginRight: "8px" }} />
+            +91 7017828192
+          </a>
+        ) : (
           <>
+            <a
+            href="tel:+917017828192"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              padding: "8px 16px",
+              backgroundColor: "black",
+              color: "white",
+              borderRadius: "8px",
+              animation: "pulse 2s infinite",
+              textDecoration: "none",
+              fontWeight: "bold",
+              transition: "all 0.3s ease",
+              width: "160px",
+              justifyContent: "center",
+            }}
+          >
+            <PhoneOutlined style={{ marginRight: "8px" }} />
+            +91 7017828192
+          </a>
+
             <Button
               type="text"
               icon={<MenuOutlined />}
@@ -136,7 +158,7 @@ const Nav = ({ openPopup }) => {
               style={{
                 fontSize: "20px",
                 color: menuTextColor,
-                transition: "color 0.3s ease",
+                marginLeft: "12px",
               }}
             />
             <Drawer
@@ -144,19 +166,23 @@ const Nav = ({ openPopup }) => {
               placement="right"
               onClose={() => setVisible(false)}
               open={visible}
+              bodyStyle={{ padding: 0 }}
             >
               <Menu mode="vertical" onClick={() => setVisible(false)}>
                 {menuItems}
-                <Menu.Item>
-                  <Button type="primary" block onClick={openPopup}>
-                    Enquire Now
-                  </Button>
-                </Menu.Item>
               </Menu>
             </Drawer>
           </>
         )}
       </Col>
+
+      <style>{`
+        @keyframes pulse {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+          100% { transform: scale(1); }
+        }
+      `}</style>
     </Row>
   );
 };

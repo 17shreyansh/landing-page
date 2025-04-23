@@ -10,6 +10,7 @@ import "../App.css"; // Import external CSS for hover styles
 import Amenities from '../components/Amenities';
 import LocationAdvantages from '../components/LocationAdvantages';
 import FooterSection from '../components/Footer';
+import Gallery from '../components/Gallery';
 
 
 
@@ -40,6 +41,10 @@ const Home = () => {
 <div id="location">
   <LocationAdvantages />
 </div>
+<div id="gallery">
+  <Gallery />
+</div>
+
 <div id="contact">
   <FooterSection />
 </div>

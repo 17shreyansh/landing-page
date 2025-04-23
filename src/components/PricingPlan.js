@@ -1,126 +1,146 @@
-import React from "react";
-import { Row, Col, Typography, Button } from "antd";
-import { CheckOutlined } from "@ant-design/icons";
+import React, { useState } from "react";
+import { Row, Col, Typography, Button, Modal } from "antd";
+import { HomeOutlined } from "@ant-design/icons";
+import CommonForm from "./Form";
 
 const { Title, Paragraph } = Typography;
 
 const pricingData = [
   {
-    title: "Standard",
-    price: "₹15,000/month",
-    features: [
-      "Furnished Cabin",
-      "High-Speed Internet",
-      "Meeting Room Access",
-      "24/7 Security",
-    ],
+    title: "3 BHK",
+    price: "₹ 8.17 Cr* Onwards",
+    size: "Size : 3270 Sq.Ft",
   },
   {
-    title: "Premium",
-    price: "₹25,000/month",
-    features: [
-      "Private Office Space",
-      "Unlimited Meeting Room Access",
-      "Dedicated Reception",
-      "Complimentary Beverages",
-    ],
+    title: "4 BHK",
+    price: "₹ 11.21 Cr* Onwards",
+    size: "Size : 4315 Sq.Ft",
     highlight: true,
   },
   {
-    title: "Enterprise",
-    price: "Custom Pricing",
-    features: [
-      "Custom Layout",
-      "Branding Options",
-      "Dedicated Facilities",
-      "Priority Support",
-    ],
+    title: "5 BHK",
+    price: "₹ 17.79 Cr* Onwards",
+    size: "Size : 5935 Sq.Ft",
   },
 ];
 
 const PricingPlan = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+
+  const showModal = (plan) => {
+    setSelectedPlan(plan);
+    setIsModalVisible(true);
+  };
+
+ 
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   return (
-    <div style={{ padding: "100px 5%", background: "#ffffff" }}>
-      <div style={{ textAlign: "center", marginBottom: "60px" }}>
-        <Title level={2} style={{ fontWeight: 700 }}>
-          Our Pricing Plans
+    <div style={{ padding: "10px 5%", background: "#fff" }}>
+      <div style={{  marginBottom: "60px" }}>
+        <Title level={1} style={{ fontWeight: 700, fontSize:80, textAlign:"right"}}>
+          Price List
         </Title>
-        <Paragraph style={{ fontSize: "16px", color: "#666", maxWidth: 600, margin: "0 auto" }}>
-          Designed to match your needs — from startups to enterprises.
+        <Paragraph style={{ fontSize: 25, color: "#777", maxWidth: 600, margin: "0 auto",textAlign: "center", }}>
+        Unlock the Door to Affordable Luxury
         </Paragraph>
       </div>
-
-      <Row gutter={[32, 48]} justify="center">
+      <Row gutter={[32, 32]} justify="center">
         {pricingData.map((plan, index) => (
-          <Col xs={24} md={8} key={index}>
+          <Col xs={20} sm={12} md={8} lg={6} xl={6} key={index}>
             <div
               style={{
-                padding: "40px 30px",
-                borderRadius: 16,
-                background: plan.highlight ? "#f0f5ff" : "#f9f9f9",
-                border: plan.highlight ? "1.5px solid #1890ff" : "1px solid #e0e0e0",
-                transition: "all 0.3s ease",
                 position: "relative",
-                height: "100%",
+                padding: "36px 30px",
+                borderRadius: "20px",
+                background: "#fdfdfd",
+                boxShadow: plan.highlight
+                  ? "0 8px 24px rgba(0, 0, 0, 0.1)"
+                  : "0 6px 18px rgba(0, 0, 0, 0.06)",
+                border: plan.highlight ? "1.5px solid #000" : "1px solid #eaeaea",
+                transition: "0.3s ease",
               }}
             >
+              {/* Horizontal Highlight Banner */}
               {plan.highlight && (
                 <div
                   style={{
-                    position: "absolute",
-                    top: -16,
-                    left: 20,
-                    background: "#1890ff",
-                    color: "#fff",
-                    padding: "4px 12px",
+                    width: "100%",
+                    backgroundColor: "#000",
+                    padding: "8px 16px",  // Reduced size for subtle highlight
                     borderRadius: "12px",
-                    fontSize: 12,
+                    marginBottom: 16,  // Reduced space between the banner and content
+                    color: "#fff",
+                    fontSize: 14,  // Reduced font size
                     fontWeight: 600,
+                    textAlign: "center",
+                    letterSpacing: 1,
+                    opacity: 0.8,  // Reduced opacity for a more subtle look
                   }}
                 >
-                  Most Popular
+                  MOST PREFERRED CHOICE
                 </div>
               )}
 
-              <Title level={3} style={{ marginBottom: 12 }}>{plan.title}</Title>
+              <Title level={4} style={{ fontWeight: 700, marginBottom: 12 }}>
+                {plan.title}
+              </Title>
+
               <Paragraph
                 style={{
                   fontSize: 18,
                   fontWeight: 600,
-                  color: "#1890ff",
-                  marginBottom: 24,
+                  color: "#000",
+                  marginBottom: 12,
                 }}
               >
                 {plan.price}
               </Paragraph>
 
-              <div style={{ marginBottom: 24 }}>
-                {plan.features.map((feature, idx) => (
-                  <div key={idx} style={{ display: "flex", alignItems: "center", marginBottom: 12 }}>
-                    <CheckOutlined style={{ color: "#52c41a", marginRight: 10 }} />
-                    <span style={{ color: "#444", fontSize: 15 }}>{feature}</span>
-                  </div>
-                ))}
-              </div>
+              <Paragraph style={{ fontSize: 16, color: "#444", marginBottom: 24 }}>
+                {plan.size}
+              </Paragraph>
 
               <Button
                 type={plan.highlight ? "primary" : "default"}
                 block
                 size="large"
                 style={{
-                  borderRadius: 8,
+                  borderRadius: 10,
                   fontWeight: 600,
-                  borderColor: plan.highlight ? "#1890ff" : "#ccc",
+                  background: plan.highlight ? "#000" : "#fff",
+                  color: plan.highlight ? "#fff" : "#333",
+                  borderColor: plan.highlight ? "#000" : "#ccc",
                 }}
+                icon={<HomeOutlined />}
+                onClick={() => showModal(plan)}  // Trigger modal on click
               >
-                Choose Plan
+                Know More
               </Button>
             </div>
           </Col>
         ))}
       </Row>
+
+      {/* Modal */}
+      {selectedPlan && (
+        <Modal
+          
+          visible={isModalVisible}
+          onCancel={handleCancel}
+          footer={null}  
+          width={500}
+          
+        >
+          <CommonForm/>
+        </Modal>
+      )}
     </div>
   );
 };
 
 export default PricingPlan;
+
