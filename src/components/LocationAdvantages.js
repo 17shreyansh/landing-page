@@ -24,7 +24,7 @@ const LocationAdvantage = () => {
       style={{
         display: "flex",
         flexWrap: "wrap",
-        padding: "60px 5%",
+        padding: "60px 10%",
         background: "#fff",
         gap: "40px",
         justifyContent: "space-between",
